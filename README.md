@@ -14,16 +14,13 @@ First you need to log into qlogin
 Input with the Folder with variant files and output path and name<br />
 `/illumina/scratch/K2-I/software/SNV_auto_caller/SNV_Caller.R --Folder=/PATH/TO/bevmo_VERSION_Analysis/Variants/ --output=/PATH/TO/output.csv --cell_lines="CELL_LINE_NAME" --agnostic="TRUE/FALSE"`
 
-![Example Command](./resource/example_cmd.png)
-
-**With Agnositic Mode On**
 ![Example Command](./resource/example_cmd_on.png)
 
 SNV Caller takes in 4 arguments 
 
 * `--Folder`: This is the path to Variants after a Bevmo run or any folder that contains .vcf files as suffix.
-* `--output`: Path an name of the output **csv** file. If the file name already exist, the programm will stop. Please chose another name. 
-* `--cell_lines` : The cell line name you are interested in separated with commas. Please use **COSMIC** Format if there is name conflict between COSMIC and CCLE. _(see Appendix)_
+* `--output`: Path an name of the output *csv* file. If the file name already exist, the programm will stop. Please chose another name. 
+* `--cell_lines` : The cell line name you are interested in separated with commas. Please use *COSMIC* Format if there is name conflict between COSMIC and CCLE. _(see Appendix)_
 * `--agnostic` : Cell line agnostic mode. Accept TRUE or FALSE. If True, agnostic mode will be on. It will ignore `--cell_lines` flag and will search through the whole CCLE and COSMIC truth table. _NOTE:Agnostic will generate many unneeded data. Use with caution._
 
 ### Output
@@ -32,17 +29,26 @@ The header of the output is as follows
 Cell_Line_Name | Gene |	Chr	| Start | End | Variant_Type | Ref | Alt | Observed variant frequency (1=100%) | Data Source
 --- | --- | --- | --- | --- | --- | --- | --- | --- | --- 
 
+## CNV_Caller 
+Input with the Folder with variant files and output path and name<br />
+`/illumina/scratch/K2-I/software/SNV_auto_caller/CNV_Caller.R --Folder=/PATH/TO/CRAFT_OUTPUT --outputFolder=/PATH/TO/CNV_output_folder --cell_lines='CELL_LINE_NAMES'`
 
+![Example Command](./resource/example_cnv_cmd.png)
 
-## CNV_Caller
-`	/illumina/scratch/K2-I/software/SNV_auto_caller/CNV_Caller.R  --Folder=/PATH/TO/Runs/bevmo_version_Analysis/Amplification/ --outputFolder=/PATH/TO/CNV_output_folder
-`
+CNV Caller takes in 4 arguments 
+
+* `--Folder`: This is the path to Variants after a CRAFT run or any folder that contains fold.change. files as prefix.
+* `--outputFolder`: Path an name of the output *txt* file. for each cell line and each sample combination the Caller will generate a calling output in the outputFolder
+* `--cell_lines` : The cell line name you are interested in separated with commas. Please use *COSMIC* Format if there is name conflict between COSMIC and CCLE. _(see Appendix)_
+
 ### Output
 The header of the output is as follows
 
-GeneName | FC  | qScore | log_2_power | LOVO_LARGE_INTESTINE | CCLE_log_2_power
---- | --- | --- | --- | --- | --- 
+gene | fold_change | t_stat | q_score | num_targets | _cellline-name_ | CCLE_fold_change
+--- | --- | --- | --- | --- | --- | ---
 
+## Appedix: 
+**Rows are not Aligned**
 
 ## Appedix: 
 |                |                  | 

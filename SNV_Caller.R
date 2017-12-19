@@ -1,5 +1,6 @@
 #! /illumina/scratch/K2-I/Users/qliu2/JIRA/Code/R-3.4.1/bin/Rscript --vanilla
 ## Load Libraries ## 
+VERSION = "1.0.0.1"
 if (!require("stringr")) install.packages("stringr",repos = "http://cran.us.r-project.org")
 library(stringr)
 
@@ -26,6 +27,7 @@ if (startsWith(toupper(agnostic),"T")) {
 }
 
 
+
 ## Check if file exists
 if (file.exists(output)) {
   stop("Output file exists. Please use a new name or a different path.")
@@ -43,6 +45,9 @@ if (length(folder_index)==0){
   stop("Folder does not contain vcf files. Check again")
 }
 vcf_files=folder_list[folder_index]
+
+############ PRINT VERSION and script name ###########
+print(paste("####### SNV Caller", VERSION,"#######"))
 
 ### Read in CCLE and COSMIC SNP files
 CCLE_table=read.csv("/illumina/scratch/K2-I/software/SNV_auto_caller/resource/CCLE_SNV_indel.csv",sep=",",stringsAsFactors = FALSE)
@@ -62,7 +67,7 @@ CCLE_empty=FALSE
 COSMIC_empty=FALSE
 title=cbind("Sample_name","Cell_Line","Gene","Chr","Start",	"End",	"Variant_Type","Ref","Alt",	"DP","Observed variant frequency (1=100%)","Data Source", "CLLE VF if exist")
 write.table(title,file=output, sep=",", col.names = FALSE,row.names = FALSE,append = TRUE)
-j =5
+
 for(j in 1:length(vcf_files)){
   vcf=vcf_files[j]
   print(paste("Processing",vcf, "..."))
